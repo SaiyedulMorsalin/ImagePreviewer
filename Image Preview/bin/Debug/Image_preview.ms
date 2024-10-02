@@ -39,9 +39,9 @@ rollout imageloader "small browser" width:240 height:270
 	   small_dialog.extentions = extentions.text
 	   mypath = thePath = getSavepath()
 	   
-	   small_dialog.Filepath = mypath
-	   small_dialog.Reload()
+	   small_dialog.DirectoryLoad mypath
 	   print mypath
+		
    )
 	button b03 "PrintName"
 	   on b03 pressed do

@@ -29,11 +29,7 @@ namespace Image_Preview.Controls
             item1.Click += Item1_Click;
             item2.Click += Item2_Click;
             item3.Click += Item3_Click;
-
-            // Add items to the ContextMenuStrip
             contextMenuStrip.Items.AddRange(new ToolStripItem[] { item1, item2, item3 });
-
-            // Associate the ContextMenuStrip with the Form
             this.ContextMenuStrip = contextMenuStrip;
 
         }

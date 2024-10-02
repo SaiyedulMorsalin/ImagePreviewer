@@ -23,6 +23,63 @@ namespace Image_Preview
         public static string Filepath = @"C:\Users\vn\Desktop";
         public static string extentions = @".jpg|.png";
 
+        public void DirectoryLoad(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                if (!Directory.Exists(Filepath))
+                {
+                    Directory.CreateDirectory(Filepath);
+                }
+
+                DirectoryInfo dr = new DirectoryInfo(path);
+                FileInfo[] fls = dr.GetFiles();
+
+                string[] exts = extentions.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+
+                for (int i = 0; i < fls.Length; i++)
+                {
+                    for (int j = 0; j < exts.Length; j++)
+                    {
+                        if (fls[i].Extension.ToLower().Contains(exts[j].ToLower()))
+                        {
+                         
+                            
+
+                          
+                            string destinationFile = Path.Combine(Filepath, fls[i].Name);
+
+                            if (!File.Exists(destinationFile))
+                            {
+                                try
+                                {
+                                   
+                                    File.Copy(fls[i].FullName, destinationFile);
+                                    Controls.mybtn btn = new Controls.mybtn();
+                                    btn.btn_text = fls[i].Name;
+                                    btn.filepath = fls[i];
+                                    btn.refreshme();
+                                    flowLayoutPanel1.Controls.Add(btn);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show($"Error copying file {fls[i].Name}: {ex.Message}");
+                                }
+                            }
+                            else
+                            {
+                                
+                                Console.WriteLine($"File {fls[i].Name} already exists in the destination directory.");
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Source directory does not exist.");
+            }
+        }
 
         public void Reload()
         {
