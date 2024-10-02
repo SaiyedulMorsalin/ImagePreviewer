@@ -18,9 +18,24 @@ namespace Image_Preview.Controls
 {
     public partial class mybtn : UserControl
     {
+        private ContextMenuStrip contextMenuStrip;
         public mybtn()
         {
             InitializeComponent();
+            contextMenuStrip = new ContextMenuStrip();
+            ToolStripMenuItem item1 = new ToolStripMenuItem("Option 1");
+            ToolStripMenuItem item2 = new ToolStripMenuItem("Option 2");
+            ToolStripMenuItem item3 = new ToolStripMenuItem("Option 3");
+            item1.Click += Item1_Click;
+            item2.Click += Item2_Click;
+            item3.Click += Item3_Click;
+
+            // Add items to the ContextMenuStrip
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { item1, item2, item3 });
+
+            // Associate the ContextMenuStrip with the Form
+            this.ContextMenuStrip = contextMenuStrip;
+
         }
 
         public string btn_text = "";
@@ -94,6 +109,20 @@ namespace Image_Preview.Controls
                                 $"Created On: {creationDate}";
 
             MessageBox.Show(message, "Image Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void Item1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Option 1 selected!");
+        }
+
+        private void Item2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Option 2 selected!");
+        }
+
+        private void Item3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Option 3 selected!");
         }
 
 

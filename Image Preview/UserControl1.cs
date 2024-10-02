@@ -13,11 +13,12 @@ using System.Windows.Media.Imaging;
 
 namespace Image_Preview
 {
-    public partial class UserControl1: UserControl
+    public partial class UserControl1 : UserControl
     {
         public UserControl1()
         {
             InitializeComponent();
+
         }
         public static string Filepath = @"C:\Users\vn\Desktop";
         public static string extentions = @".jpg|.png";
@@ -58,7 +59,7 @@ namespace Image_Preview
         {
             FileInfo imageFile = new FileInfo(imagePath);
 
-           
+
             long fileSize = imageFile.Length;
             string fileSizeInKB = (fileSize / 1024).ToString() + " KB";
 
@@ -94,5 +95,5 @@ namespace Image_Preview
 
         }
     }
-   
+
 }
