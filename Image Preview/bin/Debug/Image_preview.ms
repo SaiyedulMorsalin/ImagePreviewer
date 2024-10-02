@@ -25,7 +25,7 @@ rollout imageloader "small browser" width:240 height:270
 	   
    )
    
-   edittext extentions "Extentions:" text:".jpg|.png|.Max"
+   edittext extentions "Extentions:" text:".jpg|.png|"
    button b01 "Refresh"
    on b01 pressed do 
    (
