@@ -1,0 +1,8 @@
+c:\users\vn\documents\visual studio 2015\Projects\Image Preview\Image Preview\bin\Debug\Image Preview.dll
+c:\users\vn\documents\visual studio 2015\Projects\Image Preview\Image Preview\bin\Debug\Image Preview.pdb
+c:\users\vn\documents\visual studio 2015\Projects\Image Preview\Image Preview\obj\Debug\Image Preview.csprojResolveAssemblyReference.cache
+c:\users\vn\documents\visual studio 2015\Projects\Image Preview\Image Preview\obj\Debug\Image_Preview.Controls.mybtn.resources
+c:\users\vn\documents\visual studio 2015\Projects\Image Preview\Image Preview\obj\Debug\Image_Preview.UserControl1.resources
+c:\users\vn\documents\visual studio 2015\Projects\Image Preview\Image Preview\obj\Debug\Image Preview.csproj.GenerateResource.Cache
+c:\users\vn\documents\visual studio 2015\Projects\Image Preview\Image Preview\obj\Debug\Image Preview.dll
+c:\users\vn\documents\visual studio 2015\Projects\Image Preview\Image Preview\obj\Debug\Image Preview.pdb
