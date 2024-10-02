@@ -43,23 +43,6 @@ namespace Image_Preview.Controls
             Bitmap big_image = null;
             ToolTip toolTip = new ToolTip();
 
-            //if (filepath.Extension.ToUpper() == ".MAX")
-            //{
-            //    try
-            //    {
-            //        big_image = GetMaxPreviewBitmapFromFile(filepath.FullName);
-            //        button1.BackgroundImage = big_image;
-            //        button1.Text = "";
-
-            //        // Set tooltip to show filename and path
-            //        toolTip.SetToolTip(button1, $"Filename: {filepath.Name}\nPath: {filepath.FullName}");
-            //    }
-            //    catch
-            //    {
-            //        big_image = null;
-            //    }
-            //}
-            //else
             try
             {
                 button1.BackgroundImage = System.Drawing.Image.FromFile(filepath.FullName);

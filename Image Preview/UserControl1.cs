@@ -26,7 +26,7 @@ namespace Image_Preview
         public void Reload()
         {
             flowLayoutPanel1.Width = this.Width - 20;
-            flowLayoutPanel1.Controls.Clear();//Should be modify
+            flowLayoutPanel1.Controls.Clear();
             if (Directory.Exists(Filepath))
             {
                 DirectoryInfo dr = new DirectoryInfo(Filepath);
@@ -47,6 +47,11 @@ namespace Image_Preview
                         }
                     }
                 }
+            }
+            else
+            {
+                string message = "Folder Directory is not Found!";
+                MessageBox.Show(message, "Image Details", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public static void ShowImageDetails(string imagePath)
@@ -84,7 +89,10 @@ namespace Image_Preview
             Reload();
         }
 
-        
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
    
 }
