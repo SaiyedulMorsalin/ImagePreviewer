@@ -31,6 +31,7 @@ rollout imageloader "small browser" width:240 height:270
    (
 	   small_dialog.extentions = extentions.text
 	   small_dialog.Reload()
+	   print "Reload"
    )
    
    button b02 "Select directory"
@@ -38,19 +39,22 @@ rollout imageloader "small browser" width:240 height:270
    (
 	   small_dialog.extentions = extentions.text
 	   mypath = thePath = getSavepath()
-	   
-	   small_dialog.DirectoryLoad mypath
+	   small_dialog.Filepath=mypath
+		small_dialog.Reload()
+	   print "Select Directory...!"
 	   print mypath
 		
    )
-	button b03 "PrintName"
+	button b03 "Copy To Root Directory"
 	   on b03 pressed do
 	   (
-		   print "Saiyedul"
-		   --print small_dialog.MyName1
-		   
-		   --small_dialog.ShowImageDetails @"C:\Users\mdsai\OneDrive\Desktop\errr.png"
-		  
+		small_dialog.extentions = extentions.text
+		mypath = thePath = getSavepath()
+		small_dialog.Filepath=@"C:\MyAssets\Model library\bed\bed cover pillow\"
+		small_dialog.DirectoryLoad mypath
+		small_dialog.Reload()
+		print mypath
+		print "Copy to Base Directory "
 		   
 	   )
   --on small_dialog thumbpicked sender args do

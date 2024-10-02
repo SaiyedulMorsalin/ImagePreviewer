@@ -25,16 +25,16 @@ C:\Users\mdsai\OneDrive\Desktop\Sir\ImagePreview2024\ImagePreview\Image Preview\
 C:\Users\mdsai\OneDrive\Desktop\Sir\ImagePreview2024\ImagePreview\Image Preview\bin\Debug\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll
 C:\Users\mdsai\OneDrive\Desktop\Sir\ImagePreview2024\ImagePreview\Image Preview\obj\Debug\ImagePre.680A8843.Up2Date
 C:\Users\mdsai\OneDrive\Desktop\Sir\ImagePreview2024\ImagePreview\Image Preview\bin\Debug\Microsoft.VisualStudio.OLE.Interop.dll
+C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Image Preview.dll
+C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Microsoft.VisualStudio.OLE.Interop.dll
+C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Microsoft.VisualStudio.Interop.dll
+C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll
 C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\obj\Debug\ImagePreview.csproj.AssemblyReference.cache
 C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\obj\Debug\Image_Preview.Controls.mybtn.resources
 C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\obj\Debug\Image_Preview.UserControl1.resources
 C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\obj\Debug\ImagePreview.csproj.GenerateResource.cache
 C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\obj\Debug\ImagePreview.csproj.CoreCompileInputs.cache
-C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Image Preview.dll
-C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Image Preview.pdb
-C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Microsoft.VisualStudio.OLE.Interop.dll
-C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Microsoft.VisualStudio.Interop.dll
-C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll
 C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\obj\Debug\ImagePre.680A8843.Up2Date
 C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\obj\Debug\Image Preview.dll
 C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\obj\Debug\Image Preview.pdb
+C:\Users\mdsai\OneDrive\Desktop\ImagePreview\ImagePreview\Image Preview\bin\Debug\Image Preview.pdb

@@ -22,8 +22,27 @@ namespace Image_Preview
         }
         public static string Filepath = @"C:\Users\vn\Desktop";
         public static string extentions = @".jpg|.png";
+        public async Task CopyFileAsync(string sourceFile, string destinationFile)
+        {
+            const int bufferSize = 2 * 1024 * 1024; // Buffer size 
 
-        public void DirectoryLoad(string path)
+            try
+            {
+                using (FileStream sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, useAsync: true))
+                using (FileStream destinationStream = new FileStream(destinationFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, useAsync: true))
+                {
+                    await sourceStream.CopyToAsync(destinationStream);
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
+
+
+        public async Task DirectoryLoad(string path)
         {
             if (Directory.Exists(path))
             {
@@ -34,8 +53,9 @@ namespace Image_Preview
 
                 DirectoryInfo dr = new DirectoryInfo(path);
                 FileInfo[] fls = dr.GetFiles();
-
                 string[] exts = extentions.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+
+                List<Task> copyTasks = new List<Task>();
 
                 for (int i = 0; i < fls.Length; i++)
                 {
@@ -43,43 +63,32 @@ namespace Image_Preview
                     {
                         if (fls[i].Extension.ToLower().Contains(exts[j].ToLower()))
                         {
-                         
-                            
+                            Controls.mybtn btn = new Controls.mybtn();
+                            btn.btn_text = fls[i].Name;
+                            btn.filepath = fls[i];
+                            btn.refreshme();
+                            flowLayoutPanel1.Controls.Add(btn);
 
-                          
                             string destinationFile = Path.Combine(Filepath, fls[i].Name);
 
                             if (!File.Exists(destinationFile))
                             {
-                                try
-                                {
-                                   
-                                    File.Copy(fls[i].FullName, destinationFile);
-                                    Controls.mybtn btn = new Controls.mybtn();
-                                    btn.btn_text = fls[i].Name;
-                                    btn.filepath = fls[i];
-                                    btn.refreshme();
-                                    flowLayoutPanel1.Controls.Add(btn);
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show($"Error copying file {fls[i].Name}: {ex.Message}");
-                                }
-                            }
-                            else
-                            {
-                                
-                                Console.WriteLine($"File {fls[i].Name} already exists in the destination directory.");
+                                copyTasks.Add(CopyFileAsync(fls[i].FullName, destinationFile));
                             }
                         }
                     }
                 }
+
+            
+                await Task.WhenAll(copyTasks);
             }
             else
             {
                 MessageBox.Show("Source directory does not exist.");
             }
         }
+
+
 
         public void Reload()
         {
@@ -120,10 +129,10 @@ namespace Image_Preview
             long fileSize = imageFile.Length;
             string fileSizeInKB = (fileSize / 1024).ToString() + " KB";
 
-            // Get creation date
+  
             string creationDate = imageFile.CreationTime.ToString("g");
 
-            // Get image resolution if applicable
+ 
             string resolution = "";
             if (imageFile.Extension.ToLower() == ".jpg" || imageFile.Extension.ToLower() == ".png")
             {
@@ -133,7 +142,6 @@ namespace Image_Preview
                 }
             }
 
-            // Display image details in a MessageBox
             string message = $"File: {imageFile.Name}\n" +
                             $"Size: {fileSizeInKB}\n" +
                             $"Resolution: {resolution}\n" +

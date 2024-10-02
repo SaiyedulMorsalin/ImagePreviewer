@@ -49,27 +49,39 @@ namespace Image_Preview.Controls
 
 
 
-        private void load_images()
+        private static Dictionary<string, Image> imageCache = new Dictionary<string, Image>();
+
+        private async void load_images()
         {
-            Bitmap big_image = null;
             ToolTip toolTip = new ToolTip();
 
             try
             {
-                button1.BackgroundImage = System.Drawing.Image.FromFile(filepath.FullName);
+                if (!imageCache.ContainsKey(filepath.FullName))
+                {
+                    await Task.Run(() =>
+                    {
+                        using (var img = Image.FromFile(filepath.FullName))
+                        {
+                            var thumbnail = img.GetThumbnailImage(175, 175, null, IntPtr.Zero);
+                            imageCache[filepath.FullName] = new Bitmap(thumbnail);
+                        }
+                    });
+                }
+
+                button1.BackgroundImage = imageCache[filepath.FullName];
                 button1.Text = "";
-                Console.WriteLine(filepath.FullName);
                 toolTip.SetToolTip(button1, $"Filename: {filepath.Name}\nPath: {filepath.FullName}");
             }
             catch
             {
-                big_image = null;
+                button1.BackgroundImage = null;
             }
-
-
 
             button1.Click += new EventHandler(button3_Click);
         }
+
+
 
 
         private void button3_Click(object sender, EventArgs e)
