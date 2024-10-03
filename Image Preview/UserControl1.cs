@@ -24,7 +24,7 @@ namespace Image_Preview
         public static string extentions = @".jpg|.png";
         public async Task CopyFileAsync(string sourceFile, string destinationFile)
         {
-            const int bufferSize = 2 * 1024 * 1024; // Buffer size 
+            const int bufferSize = 256 * 1024; // Buffer size 
 
             try
             {
@@ -51,6 +51,9 @@ namespace Image_Preview
                     Directory.CreateDirectory(Filepath);
                 }
 
+                DisposeImages(); // Dispose of previously loaded images
+                flowLayoutPanel1.Controls.Clear();
+
                 DirectoryInfo dr = new DirectoryInfo(path);
                 FileInfo[] fls = dr.GetFiles();
                 string[] exts = extentions.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
@@ -66,7 +69,11 @@ namespace Image_Preview
                             Controls.mybtn btn = new Controls.mybtn();
                             btn.btn_text = fls[i].Name;
                             btn.filepath = fls[i];
-                            btn.refreshme();
+
+                            // Load a thumbnail instead of full image
+                            Image thumbnail = await GetThumbnailAsync(fls[i].FullName);
+                            btn.BackgroundImage = thumbnail;
+
                             flowLayoutPanel1.Controls.Add(btn);
 
                             string destinationFile = Path.Combine(Filepath, fls[i].Name);
@@ -79,7 +86,6 @@ namespace Image_Preview
                     }
                 }
 
-            
                 await Task.WhenAll(copyTasks);
             }
             else
@@ -87,6 +93,29 @@ namespace Image_Preview
                 MessageBox.Show("Source directory does not exist.");
             }
         }
+
+        private async Task<Image> GetThumbnailAsync(string imagePath, int width = 175, int height = 175)
+        {
+            return await Task.Run(() =>
+            {
+                using (var img = Image.FromFile(imagePath))
+                {
+                    return img.GetThumbnailImage(width, height, null, IntPtr.Zero);
+                }
+            });
+        }
+
+        private void DisposeImages()
+        {
+            foreach (var control in flowLayoutPanel1.Controls)
+            {
+                if (control is Controls.mybtn mybtnControl && mybtnControl.BackgroundImage != null)
+                {
+                    mybtnControl.BackgroundImage.Dispose();
+                }
+            }
+        }
+
 
 
 
@@ -158,6 +187,10 @@ namespace Image_Preview
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+        public static void ClearImageCache()
+        {
+            Controls.mybtn.ClearCache();
         }
     }
 

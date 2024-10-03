@@ -15,7 +15,7 @@ rollout imageloader "small browser" width:240 height:270
 	
 	on imageloader open do
    (
- showproperties small_dialog
+
 	  
 	   --showEvents  small_dialog
 	
@@ -64,13 +64,21 @@ rollout imageloader "small browser" width:240 height:270
 		print "Copy to Base Directory "
 		   
 	   )
+	button b02 "Clear ImageCache"
+	on b02 pressed do
+	(
+	   
+		small_dialog.Reload()
+	   print "Clear Cache...!"
+	  
+	)
   
    
 )
 
 
 
-imagedialog = newRolloutFloater "small browser" 450 650
+imagedialog = newRolloutFloater "small browser" 500 650
 addRollout  imageloader imagedialog
 
 
