@@ -26,38 +26,39 @@ namespace Image_Preview.Controls
         private void InitializeContextMenu()
         {
             contextMenuStrip = new ContextMenuStrip();
-            ToolStripMenuItem item1 = new ToolStripMenuItem("Option 1");
-            ToolStripMenuItem item2 = new ToolStripMenuItem("Option 2");
-            ToolStripMenuItem item3 = new ToolStripMenuItem("Delete");
 
-            item1.Click += Item1_Click;
-            item2.Click += Item2_Click;
-            item3.Click += (sender, e) => Item3_Click(filepath.FullName);
+            ToolStripMenuItem item1 = new ToolStripMenuItem("Option 1", null, Item1_Click);
+            ToolStripMenuItem item2 = new ToolStripMenuItem("Option 2", null, Item2_Click);
+            ToolStripMenuItem item3 = new ToolStripMenuItem("Delete", null, (sender, e) => Item3_Click(filepath.FullName));
 
             contextMenuStrip.Items.AddRange(new ToolStripItem[] { item1, item2, item3 });
             this.ContextMenuStrip = contextMenuStrip;
         }
 
         // Refresh button text and load image
-        public void refreshme()
+        public void RefreshControl()
         {
             button1.Text = btn_text;
-            load_images();
+            LoadImages();
         }
 
         // Handle button click to copy the file path to the clipboard
         private void button1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(filepath.FullName);
+            if (filepath != null)
+            {
+                Clipboard.SetText(filepath.FullName);
+            }
         }
 
         // Asynchronously load images and cache them
-        private async void load_images()
+        private async void LoadImages()
         {
             ToolTip toolTip = new ToolTip();
 
             try
             {
+                // Load image and cache it if not already cached
                 if (!imageCache.ContainsKey(filepath.FullName))
                 {
                     await Task.Run(() =>
@@ -70,9 +71,9 @@ namespace Image_Preview.Controls
                     });
                 }
 
-                // Set the image from cache and configure the button
+                // Set the image from the cache and configure the button
                 button1.BackgroundImage = imageCache[filepath.FullName];
-                button1.Text = "";
+                button1.Text = ""; // Clear text once the image is loaded
                 toolTip.SetToolTip(button1, $"Filename: {filepath.Name}\nPath: {filepath.FullName}");
             }
             catch (Exception ex)
@@ -81,13 +82,16 @@ namespace Image_Preview.Controls
                 MessageBox.Show($"Error loading image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            button1.Click += new EventHandler(button3_Click);
+            button1.Click += button3_Click;
         }
 
         // Show image details when button is clicked
         private void button3_Click(object sender, EventArgs e)
         {
-            ShowImageDetails(filepath.FullName);
+            if (filepath != null)
+            {
+                ShowImageDetails(filepath.FullName);
+            }
         }
 
         // Show image details in a MessageBox
@@ -96,30 +100,36 @@ namespace Image_Preview.Controls
             try
             {
                 FileInfo imageFile = new FileInfo(imagePath);
-                long fileSize = imageFile.Length;
-                string fileSizeInKB = (fileSize / 1024).ToString() + " KB";
+                string fileSizeInKB = (imageFile.Length / 1024).ToString() + " KB";
                 string creationDate = imageFile.CreationTime.ToString("g");
 
-                string resolution = "";
-                if (imageFile.Extension.ToLower() == ".jpg" || imageFile.Extension.ToLower() == ".png")
-                {
-                    using (var image = Image.FromFile(imageFile.FullName))
-                    {
-                        resolution = image.Width + "x" + image.Height;
-                    }
-                }
+                string resolution = GetImageResolution(imageFile);
 
-                // Display the image details
                 string message = $"File: {imageFile.Name}\n" +
-                                $"Size: {fileSizeInKB}\n" +
-                                $"Resolution: {resolution}\n" +
-                                $"Created On: {creationDate}";
+                                 $"Size: {fileSizeInKB}\n" +
+                                 $"Resolution: {resolution}\n" +
+                                 $"Created On: {creationDate}";
+
                 MessageBox.Show(message, "Image Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error displaying image details: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // Get image resolution
+        private string GetImageResolution(FileInfo imageFile)
+        {
+            if (imageFile.Extension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                imageFile.Extension.Equals(".png", StringComparison.OrdinalIgnoreCase))
+            {
+                using (var image = Image.FromFile(imageFile.FullName))
+                {
+                    return $"{image.Width}x{image.Height}";
+                }
+            }
+            return "Unknown";
         }
 
         // Option 1 selected event
@@ -149,9 +159,8 @@ namespace Image_Preview.Controls
                         imageCache.Remove(filePath);
                     }
 
-                    // Reload the panel to reflect the deleted file
-                    UserControl1 instance = new UserControl1(); // Assuming UserControl1 handles reloading
-                    instance.Reload();
+                    // Reload the control to reflect the deletion
+                    ReloadControl();
 
                     MessageBox.Show($"{filePath} deleted successfully.");
                 }
@@ -165,16 +174,26 @@ namespace Image_Preview.Controls
                 MessageBox.Show($"Error deleting file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        // Reload the control (you should adjust how Reload works as per your application needs)
+        private void ReloadControl()
+        {
+            // You would implement the actual reload logic here
+            UserControl1 instance = new UserControl1();
+            instance.Reload();
+        }
+
+        // Clear the image cache and free memory
         public static void ClearCache()
         {
             foreach (var image in imageCache.Values)
             {
-                image.Dispose();  // Dispose of the images to free up memory.
+                image.Dispose(); // Dispose images to release resources
             }
 
-            imageCache.Clear();  // Clear the dictionary.
-            string message = "Clear All Images Cache";
-            MessageBox.Show($"Error deleting file: {message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            imageCache.Clear(); // Clear the dictionary
+
+            MessageBox.Show("All image cache has been cleared successfully.", "Cache Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
